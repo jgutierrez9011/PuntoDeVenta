@@ -1,0 +1,79 @@
+<form method="post" name="save_sale" id="save_sale">
+                            <div class="box box-info">
+                                <div class="box-header box-header-background-light with-border">
+                                    <h3 class="box-title  ">Detalles de la Factura</h3>
+									<div class="pull-right">
+										<button type="submit" class="btn btn-success pull-right "><i class="fa fa-print"></i> Guardar e imprimir</button>
+									</div>
+                                </div>
+
+                                <div class="box-background">
+                                <div class="box-body">
+
+                                    <div class="row">
+
+                                    <div class="col-md-5">
+
+                                        <label>Cliente</label>
+										<div class="input-group">
+											<select class="form-control select2 select2-hidden-accessible" name="customer_id" id="customer_id" tabindex="-1" aria-hidden="true">
+												<option value="">Selecciona Cliente</option>
+											</select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 483px;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-customer_id-container"><span class="select2-selection__rendered" id="select2-customer_id-container" title="Selecciona Cliente">Selecciona Cliente</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>
+											<span class="input-group-btn">
+												<button class="btn btn-default" type="button" data-toggle="modal" data-target="#cliente_modal"><i class="fa fa-plus"></i> Nuevo</button>
+											</span>
+										</div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Fecha</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control datepicker" name="purchase_date" value="12/03/2021" disabled="">
+
+                                            <div class="input-group-addon">
+                                                <a href="#"><i class="fa fa-calendar"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col-md-2">
+
+                                        <label>Factura Nº</label>
+                                       <input type="text" class="form-control" name="sale_number" id="sale_number" required="" value="1000000058">
+                                    </div>
+
+									<div class="col-md-2">
+
+                                        <label>Agregar productos</label>
+                                       <button type="button" class="btn btn-block btn-info" data-toggle="modal" data-target="#myModal"><i class="fa fa-search"></i> Buscar productos</button>
+                                    </div>
+                                    </div>
+									<div class="row">
+
+								</div>
+
+								 <div class="row">
+									<form id="barcode_form" method="">
+									<hr>
+										 <div class="col-md-1">
+											<input class="form-control" type="text" name="barcode_qty" id="barcode_qty" value="1" required="">
+										 </div>
+
+										 <div class="col-md-6">
+											<div class="input-group">
+													<input class="form-control" type="text" name="barcode" id="barcode" required="" placeholder="Ingresa el código de barras">
+													<span class="input-group-btn">
+														<button class="btn btn-default" type="submit"><i class="fa fa-barcode"></i> </button>
+													</span>
+											</div>
+										 </div>
+									</form>
+								</div>
+                                </div><!-- /.box-body -->
+                                    </div>
+
+
+
+
+
+
+
+                            </div></form>
