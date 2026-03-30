@@ -12,12 +12,13 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && docker-php-ext-install pdo pdo_pgsql \
     && a2enmod rewrite \
+    && a2dismod mpm_event mpm_worker || true \
     && rm -rf /var/lib/apt/lists/*
 
 # Forzar sólo un MPM (evita AH00534: More than one MPM loaded)
 RUN a2dismod mpm_event mpm_worker || true \
-    && a2enmod mpm_prefork \
-    && a2enmod rewrite
+    && rm -f /etc/apache2/mods-enabled/mpm_event.{load,conf} /etc/apache2/mods-enabled/mpm_worker.{load,conf} || true \
+    && a2enmod mpm_prefork rewrite
 
 # Instalar Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
