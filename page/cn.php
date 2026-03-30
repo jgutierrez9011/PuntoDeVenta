@@ -7,11 +7,11 @@ function conexion_bd($val)
   /*CADENA DE CONEXION PARA POSGRESQL*/
   if($val==1)
   {
-    $host = getenv('POSTGRES_HOST') ?: 'localhost';
-    $port = getenv('POSTGRES_PORT') ?: '5432';
-    $dbname = getenv('POSTGRES_DB') ?: 'msgym';
-    $user = getenv('POSTGRES_USER') ?: 'postgres';
-    $password = getenv('POSTGRES_PASSWORD') ?: 'posgres';
+    $host = getenv('PGHOST') ?: 'localhost';
+    $port = getenv('PGPORT') ?: '5432';
+    $dbname = getenv('PGDATABASE') ?: 'msgym';
+    $user = getenv('PGUSER') ?: 'postgres';
+    $password = getenv('PGPASSWORD') ?: 'posgres';
 
     $con = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
     if (pg_last_error($con))
