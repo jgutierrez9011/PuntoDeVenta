@@ -21,6 +21,13 @@ where a.intidserie = $num_factura";
 $result = pg_query(conexion_bd(1),$sql);
 $row_encabezado = pg_fetch_array($result);
 
+$logoPath = realpath(__DIR__ . '/../img/logo_fact_2.jpg');
+$logoSrc = '';
+
+if ($logoPath && file_exists($logoPath)) {
+    $logoSrc = 'file://' . str_replace('\\', '/', $logoPath);
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -106,7 +113,10 @@ $row_encabezado = pg_fetch_array($result);
 <body>
     <div class="centrado">
       <br>
-			<img src="../img/logo_fact_2.jpg">
+			
+             <?php //if ($logoSrc !== '') { ?>
+                 <!-- <img src="<?php //echo $logoSrc; ?>" width="120"> -->
+             <?php //} ?>
       <!--  <h1>SIX PACK</h1>
 				<h1>GYM</h1> -->
         <?php if(isset($reimpresion)){?>

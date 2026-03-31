@@ -114,7 +114,7 @@ function fn_save_factura()
                         datfechacreo, numcosto
                         from tbltempfacturadetalle
                         where strusuariocreo = '$usuario';
-                        select fnventa_calcular_saldo_cuenta ($numero_factura, 2,'$usuario')";
+                        select fnventa_calcular_saldo_cuenta ($numero_factura, 1,'$usuario')";
       }
       if($tipo_factura == 'CREDITO')
       {
