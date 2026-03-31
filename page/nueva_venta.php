@@ -834,8 +834,9 @@ function agregar (id)
   //  $( "#save_sale" ).submit(function( event ) {
 
     $('#save_print').click(function(event){
+      event.preventDefault();
 
-			var customer_id_ = $("#customer_id").val();
+      var customer_id_ = $("#customer_id").val();
       var neto_factura_ = $("#neto_factura").val();
       var descuento_factura_ =  $("#descuento_factura").val();
       var iva_factura_ =  $("#iva_factura").val();
@@ -847,30 +848,41 @@ function agregar (id)
       var cmb_descuento_fact_ = $("#cmbdescuento_factura").val();
       var cmb_impuesto_fact_ = $("#cmbimpuesto_factura").val();
 
+      // Abrir ventana emergente de inmediato (antes del AJAX)
+      var winFactura = null;
 
       $.ajax({
         type: "POST",
         url: "nueva_factura.php",
-        data: {customer_id:customer_id_, neto_factura:neto_factura_, descuento_factura:descuento_factura_, iva_factura:iva_factura_, total_factura:total_factura_, valor_tasa_cambio:valor_tasa_cambio_, cmbtipo_factura:tipo_fac_, sale_number:sale_number_, cmb_descuento_fact:cmb_descuento_fact_, cmb_impuesto_fact:cmb_impuesto_fact_ } ,
-     beforeSend: function(objeto){
-
-      $("#resultados").html("Mensaje: Cargando...");
-
-      },
-    success: function(datos){
-
-       VentanaCentrada('factura.php?factura='+datos,'Nueva factura','','1024','768','true');
-       location.reload();
-
-    },
-    error : function(xhr, status) {
-       alert('Disculpe, existió un problema');
-   },
-  })
-
-      event.preventDefault();
-
-		});
+        data: {
+          customer_id: customer_id_,
+          neto_factura: neto_factura_,
+          descuento_factura: descuento_factura_,
+          iva_factura: iva_factura_,
+          total_factura: total_factura_,
+          valor_tasa_cambio: valor_tasa_cambio_,
+          cmbtipo_factura: tipo_fac_,
+          sale_number: sale_number_,
+          cmb_descuento_fact: cmb_descuento_fact_,
+          cmb_impuesto_fact: cmb_impuesto_fact_
+        },
+        beforeSend: function(objeto) {
+          $("#resultados").html("Mensaje: Cargando...");
+        },
+        success: function(datos) {
+          winFactura = window.open('factura.php?factura=' + datos, 'Nueva factura', 'width=1024,height=768');
+          if (!winFactura) {
+            alert('Permiso denegado: habilita las ventanas emergentes para este sitio.');
+          }
+          setTimeout(function() {
+            location.reload();
+          }, 1000);
+        },
+        error: function(xhr, status) {
+          alert('Disculpe, existió un problema');
+        }
+      });
+    });
 </script>
 
 <script type="text/javascript">
