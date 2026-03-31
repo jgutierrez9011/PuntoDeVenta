@@ -48,13 +48,12 @@ function globales_usuario($val)
   $_SESSION["correo"] = $row_g['strcorreo'];
   $_SESSION["user"] = $row_g['strcorreo'];
   $_SESSION["imgclientenuevo"] = "";
-;
+  // No imprimir nada aquí para evitar problemas con header()
+  // echo $_SESSION["idusuario"];
 
-  echo $_SESSION["idusuario"];
 }
 
-
-  if  (isset($_COOKIE['COOKIE_INDEFINED_SESSION']) && empty($_SESSION["idusuario"]))
+if  (isset($_COOKIE['COOKIE_INDEFINED_SESSION']) && empty($_SESSION["idusuario"]))
   {
   	if ($_COOKIE['COOKIE_INDEFINED_SESSION'])
     {
