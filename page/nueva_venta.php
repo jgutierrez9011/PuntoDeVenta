@@ -834,55 +834,70 @@ function agregar (id)
   //  $( "#save_sale" ).submit(function( event ) {
 
     $('#save_print').click(function(event){
-      event.preventDefault();
+  event.preventDefault();
 
-      var customer_id_ = $("#customer_id").val();
-      var neto_factura_ = $("#neto_factura").val();
-      var descuento_factura_ =  $("#descuento_factura").val();
-      var iva_factura_ =  $("#iva_factura").val();
-      var total_factura_ =  $("#total_factura").val();
-      var valor_tasa_cambio_ =  $("#valor_tasa_cambio").val();
-      $('#cmbtipo_factura').removeAttr('disabled');
-      var tipo_fac_ = $("#cmbtipo_factura").val();
-      var sale_number_ = $("#sale_number").val();
-      var cmb_descuento_fact_ = $("#cmbdescuento_factura").val();
-      var cmb_impuesto_fact_ = $("#cmbimpuesto_factura").val();
+  var customer_id_ = $("#customer_id").val();
+  var neto_factura_ = $("#neto_factura").val();
+  var descuento_factura_ = $("#descuento_factura").val();
+  var iva_factura_ = $("#iva_factura").val();
+  var total_factura_ = $("#total_factura").val();
+  var valor_tasa_cambio_ = $("#valor_tasa_cambio").val();
 
-      // Abrir ventana emergente de inmediato (antes del AJAX)
-      var winFactura = null;
+  $('#cmbtipo_factura').removeAttr('disabled');
+  var tipo_fac_ = $("#cmbtipo_factura").val();
+  var sale_number_ = $("#sale_number").val();
+  var cmb_descuento_fact_ = $("#cmbdescuento_factura").val();
+  var cmb_impuesto_fact_ = $("#cmbimpuesto_factura").val();
 
-      $.ajax({
-        type: "POST",
-        url: "nueva_factura.php",
-        data: {
-          customer_id: customer_id_,
-          neto_factura: neto_factura_,
-          descuento_factura: descuento_factura_,
-          iva_factura: iva_factura_,
-          total_factura: total_factura_,
-          valor_tasa_cambio: valor_tasa_cambio_,
-          cmbtipo_factura: tipo_fac_,
-          sale_number: sale_number_,
-          cmb_descuento_fact: cmb_descuento_fact_,
-          cmb_impuesto_fact: cmb_impuesto_fact_
-        },
-        beforeSend: function(objeto) {
-          $("#resultados").html("Mensaje: Cargando...");
-        },
-        success: function(datos) {
-          winFactura = window.open('factura.php?factura=' + datos, 'Nueva factura', 'width=1024,height=768');
-          if (!winFactura) {
-            alert('Permiso denegado: habilita las ventanas emergentes para este sitio.');
-          }
-          setTimeout(function() {
-            location.reload();
-          }, 1000);
-        },
-        error: function(xhr, status) {
-          alert('Disculpe, existió un problema');
-        }
-      });
-    });
+  // Abrir ventana inmediatamente por acción del usuario
+  var winFactura = window.open('', 'Nueva factura', 'width=1024,height=768');
+
+  if (!winFactura) {
+    alert('Permiso denegado: habilita las ventanas emergentes para este sitio.');
+    return;
+  }
+
+  winFactura.document.write('<html><head><title>Generando factura...</title></head><body><p>Generando factura...</p></body></html>');
+
+  $.ajax({
+    type: "POST",
+    url: "nueva_factura.php",
+    data: {
+      customer_id: customer_id_,
+      neto_factura: neto_factura_,
+      descuento_factura: descuento_factura_,
+      iva_factura: iva_factura_,
+      total_factura: total_factura_,
+      valor_tasa_cambio: valor_tasa_cambio_,
+      cmbtipo_factura: tipo_fac_,
+      sale_number: sale_number_,
+      cmb_descuento_fact: cmb_descuento_fact_,
+      cmb_impuesto_fact: cmb_impuesto_fact_
+    },
+    beforeSend: function() {
+      $("#resultados_ajax").html("Mensaje: Cargando...");
+    },
+    success: function(datos) {
+      datos = $.trim(datos);
+
+      if (!datos) {
+        winFactura.document.body.innerHTML = "<p>No se recibió número de factura.</p>";
+        return;
+      }
+
+      winFactura.location.href = "factura.php?factura=" + encodeURIComponent(datos);
+
+      setTimeout(function() {
+        location.reload();
+      }, 1000);
+    },
+    error: function(xhr, status, error) {
+      winFactura.document.body.innerHTML = "<p>Error al generar la factura.</p>";
+      console.log(xhr.responseText);
+      alert('Disculpe, existió un problema');
+    }
+  });
+});
 </script>
 
 <script type="text/javascript">
