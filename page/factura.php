@@ -5,6 +5,7 @@ $medidaTicket = 180;
 
 $num_factura = base64_decode($_GET['factura']);
 
+
 if(isset($_GET['print']))
 {
 $reimpresion = base64_decode($_GET['print']);
