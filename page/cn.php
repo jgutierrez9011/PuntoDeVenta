@@ -32,7 +32,7 @@ function globales_usuario($val)
 
   $usuario = $val;
   /*Funcion que escapa la variable*/
-  $usuario = comillas_inteligentes($usuario);
+  $usuario = comillas_inteligentes($usuario, $con);
   /*se consulta el id de cargo del usuario logueado*/
   $sql="SELECT intid, concat(strpnombre::text,' ',strsnombre::text,' ',strpapellido::text,' ',strsapellido::text) nombre_usuario, strsexo,
        strcorreo, stridentificacion, strdireccion, strcontacto, strusuariocreo,
@@ -96,7 +96,6 @@ function globales_usuario($val)
 function comillas_inteligentes($valor, $con = null)
 {
     $valor = stripslashes($valor);
-
     if (!is_numeric($valor)) {
         if ($con) {
             $valor = pg_escape_string($con, $valor);
@@ -104,7 +103,6 @@ function comillas_inteligentes($valor, $con = null)
             $valor = pg_escape_string($valor); // Solo para compatibilidad antigua
         }
     }
-
     return $valor;
 }
 
