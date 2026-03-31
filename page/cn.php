@@ -93,14 +93,16 @@ function globales_usuario($val)
 
 /*Funcion que valida la entrada de las cadenas y las escapa
  para evitar inyeccion SQL*/
-function comillas_inteligentes($valor)
+function comillas_inteligentes($valor, $con = null)
 {
-    // Retirar las barras
     $valor = stripslashes($valor);
 
-    // Colocar comillas si no es entero
     if (!is_numeric($valor)) {
-        $valor = pg_escape_string($valor);
+        if ($con) {
+            $valor = pg_escape_string($con, $valor);
+        } else {
+            $valor = pg_escape_string($valor); // Solo para compatibilidad antigua
+        }
     }
 
     return $valor;
