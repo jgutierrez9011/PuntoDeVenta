@@ -160,9 +160,9 @@ function regacceso()
   $navegador = $info["browser"].'//'.$useragent;
   $user = $_SESSION["user"];
 
-  $statement = "DELETE FROM msgsac.tbltrnlogin WHERE strusuario = '$user';
-                INSERT INTO msgsac.tblaccesos(strusuario, datfechainicio, ip, strnavegador) VALUES ('$user', current_timestamp, '$ip', '$navegador');
-                INSERT INTO msgsac.tbltrnlogin(strusuario, datfechainicio) VALUES ('$user', current_timestamp)";
+  $statement = "DELETE FROM tbltrnlogin WHERE strusuario = '$user';
+                INSERT INTO tblaccesos(strusuario, datfechainicio, ip, strnavegador) VALUES ('$user', current_timestamp, '$ip', '$navegador');
+                INSERT INTO tbltrnlogin(strusuario, datfechainicio) VALUES ('$user', current_timestamp)";
 
   pg_query($con,$statement);
 }

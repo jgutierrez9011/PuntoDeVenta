@@ -6,8 +6,7 @@ $con = conexion_bd(1);
 
 $user = $_SESSION["user"];
 
-$statement = "DELETE FROM msgsac.tbltrnlogin WHERE strusuario = '$user';
-              DELETE FROM msgsac.tbl_tmp_trn_recuperacion_pospago WHERE strusuario = '$user';";
+$statement = "DELETE FROM tbltrnlogin WHERE strusuario = '$user';";
 
 pg_query($con,$statement);
 
